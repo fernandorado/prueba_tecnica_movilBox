@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PruebaTecnicaMovilBox</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="application_welcome">Bienvenido</string>
+    <string name="application_welcome_description">Aqui podra encontrar todo lo que busca</string>
+    <string name="application_welcome_continue">Continuar</string>
+</resources>
