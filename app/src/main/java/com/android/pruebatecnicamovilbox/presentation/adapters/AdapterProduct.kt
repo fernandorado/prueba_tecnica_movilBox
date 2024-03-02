@@ -6,16 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android.pruebatecnicamovilbox.R
 import com.android.pruebatecnicamovilbox.data.model.ProductModel
 import com.android.pruebatecnicamovilbox.domain.model.Product
 import com.bumptech.glide.Glide
 
-class AdaptadorProduct(private var productList: List<ProductModel>) :
+class AdaptadorProduct(private var productList: List<ProductModel>,private val productClickListener: OnProductClickListener) :
     RecyclerView.Adapter<AdaptadorProduct.ViewHolderProduct>() {
 
     lateinit var vgrupo: ViewGroup
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderProduct {
         vgrupo = parent
         val vista = LayoutInflater.from(parent.context).inflate(R.layout.item_list_product, parent, false)
@@ -43,11 +46,17 @@ class AdaptadorProduct(private var productList: List<ProductModel>) :
             .error(R.drawable.imagenrota) // Agrega una imagen de error opcional
             .into(holder.imgProduct)
 
+        holder.itemView.setOnClickListener {
+            productClickListener.onProductClick(product)
+        }
+
         /*
         holder.menuPopUp.setOnClickListener {
             // Implementa el menú emergente aquí
         }
         */
+
+
     }
 
 
@@ -70,5 +79,14 @@ class AdaptadorProduct(private var productList: List<ProductModel>) :
             txtRating = itemView.findViewById(R.id.idRatingProduct)
             menuPopUp= itemView.findViewById(R.id.menuOpciones)
         }
+
     }
+
+    interface OnProductClickListener {
+        fun onProductClick(product: ProductModel)
+    }
+
+
+
+
 }

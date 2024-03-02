@@ -24,22 +24,22 @@ class ProductRepository {
         ProductProvider.products = response
         return response
     }*/
-    /*
-        suspend fun getAllProductFromDatabase():List<Product>{
-            val response: List<ProductEntity> = productDao.getAll()
+
+        suspend fun getAllProductFromDatabase():List<ProductModel>{
+            val response: List<ProductModel> = api.getProducts()
             return response.map { it.toDomain() }
         }
+    /*
+            suspend fun insertProduct(product:List<ProductEntity>){
+                productDao.insertAll(product)
+            }
 
-        suspend fun insertProduct(product:List<ProductEntity>){
-            productDao.insertAll(product)
-        }
+            suspend fun clearProducts(){
+                productDao.deleteProducts()
+            }
 
-        suspend fun clearProducts(){
-            productDao.deleteProducts()
-        }
-
-        suspend fun clearProduct(product: ProductEntity){
-            productDao.delete(product)
-        }
-    */
+            suspend fun clearProduct(product: ProductEntity){
+                productDao.delete(product)
+            }
+        */
 }

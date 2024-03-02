@@ -20,12 +20,29 @@ class ProductViewModel : ViewModel() {
 
     val productModel = MutableLiveData<Product>()
     val isLoading = MutableLiveData<Boolean>()
+
     private val _productList = MutableLiveData<List<ProductModel>>()
     val productList: LiveData<List<ProductModel>> get() = _productList
     var listaCultivos: List<ProductModel>? = null
+     val _selectedProduct = MutableLiveData<ProductModel>()
+
+    // Expone selectedProduct como LiveData público
+    val selectedProduct: LiveData<ProductModel> get() = _selectedProduct
+
+    fun selectProduct(product: ProductModel) {
+        _selectedProduct.value = product
+    }
+
 
     init {
         fetchProductList()
+        selectedProduct.observeForever { product ->
+            if (product == null) {
+                Log.d("ProductViewModel", "selectedProduct está vacío ")
+            } else {
+                Log.d("ProductViewModel", "selectedProduct no está vacío ${selectedProduct.value}")
+            }
+        }
     }
 
     private fun fetchProductList() {

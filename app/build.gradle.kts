@@ -38,7 +38,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    composeOptions{
+    composeOptions {
         kotlinCompilerExtensionVersion = "1.5.0"
     }
     buildFeatures {
@@ -53,7 +53,7 @@ dependencies {
     val fragment_version = "1.6.2"
     val activity_version = "1.8.2"
     val room_version = "2.6.1"
-    val hilt_version ="2.44"
+    val hilt_version = "2.44"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -69,8 +69,9 @@ dependencies {
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
     ksp("com.google.dagger:hilt-android-compiler:$hilt_version")
-
-    // ViewModel
+    //Image Slider
+    implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
+// ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata:$lifecycle_version")

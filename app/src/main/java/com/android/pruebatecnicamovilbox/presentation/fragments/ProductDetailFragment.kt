@@ -1,11 +1,21 @@
 package com.android.pruebatecnicamovilbox.presentation.fragments
 
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StrikethroughSpan
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.fragment.app.viewModels
 import com.android.pruebatecnicamovilbox.R
+import com.android.pruebatecnicamovilbox.data.model.ProductModel
+import com.android.pruebatecnicamovilbox.databinding.FragmentProductDetailBinding
+import com.android.pruebatecnicamovilbox.presentation.viewmodel.ProductViewModel
+import com.denzcoskun.imageslider.models.SlideModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,43 +28,41 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ProductDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentProductDetailBinding
+    private val productViewModel: ProductViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_detail, container, false)
+        binding = FragmentProductDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProductDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProductDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val product = arguments?.getParcelable<ProductModel>("product")
+        Log.d("PRODUCT DETAIL", "PRODUCTOS no está vacío $product")
+        binding.txtNameProduct.text = product!!.title
+        binding.txtRaitingProduct.text = product!!.rating.toString()
+        binding.txtBrandProduct.text = product!!.brand
+        binding.txtDiscountProduct.text = "-" + product!!.discountPercentage + "%"
+        binding.txtDescriptionProduct.text = product!!.description
+        binding.txtStockProduct.text = product!!.stock.toString()
+        // Precio con descuento
+        val precioTotal = product!!.price - (product!!.price * (product!!.discountPercentage / 100))
+        binding.txtPriceDescountProduct.text = precioTotal.toString()
+        //TACHADO
+        val spannableString = SpannableString(product!!.price.toString())
+        spannableString.setSpan(StrikethroughSpan(), 0, product!!.price.toString().length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+        binding.txtPriceProduct.text = spannableString
+
+        val imageList = ArrayList<SlideModel>()
+        for (imageUrl in product!!.images) {
+            imageList.add(SlideModel(imageUrl))
+        }
+        
+        binding.imageSlider.setImageList(imageList)
     }
 }

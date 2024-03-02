@@ -17,10 +17,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
             android:orientation="horizontal"
-            android:padding="20dp">
+            android:padding="10sp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,9 +36,10 @@
 
                     <ImageView
                         android:id="@+id/idImgProduct"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:background="@color/backgroundImgProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/dispositivo" />
 
                 </androidx.cardview.widget.CardView>
@@ -48,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nombre Producto"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -56,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Marca Producto"
-                    android:textSize="25sp" />
+                    android:textSize="18sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -65,21 +66,20 @@
 
                     <TextView
                         android:id="@+id/idPriceProduct"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="$Precio"
-                        android:textSize="25sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/idRatingProduct"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textAlignment="textEnd"
-                        android:layout_marginRight="0dp"
                         android:text="Rating"
-                        android:textSize="25sp" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
