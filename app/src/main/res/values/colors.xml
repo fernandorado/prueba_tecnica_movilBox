@@ -6,4 +6,8 @@
     <color name="buttonPrimary">#F24B6A</color>
     <color name="cardProduct">#F8F8F8</color>
     <color name="backgroundImgProduct">#EDEDED</color>
+    <color name="green">#4FB853</color>
+    <color name="red">#D61818</color>
+    <color name="blue">#0C5FA1</color>
+    <color name="cardPrice">#F5DCDA</color>
 </resources>

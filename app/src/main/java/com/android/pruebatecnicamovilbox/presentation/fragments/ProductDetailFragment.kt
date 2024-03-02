@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.android.pruebatecnicamovilbox.R
 import com.android.pruebatecnicamovilbox.data.model.ProductModel
@@ -48,13 +49,24 @@ class ProductDetailFragment : Fragment() {
         binding.txtRaitingProduct.text = product!!.rating.toString()
         binding.txtBrandProduct.text = product!!.brand
         binding.txtDiscountProduct.text = "-" + product!!.discountPercentage + "%"
+        binding.txtDiscountProduct.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
         binding.txtDescriptionProduct.text = product!!.description
         binding.txtStockProduct.text = product!!.stock.toString()
+        binding.txtInStock.text = "InStock"
+        // In STOCK
+        if (product!!.stock > 0) {
+            binding.txtInStock.text = "In Stock"
+            binding.txtInStock.setTextColor(ContextCompat.getColor(requireContext(), R.color.green)) // Cambia "verde" por el color correspondiente
+        } else {
+            binding.txtInStock.text = "Out of Stock"
+            binding.txtInStock.setTextColor(ContextCompat.getColor(requireContext(), R.color.red)) // Cambia "rojo" por el color correspondiente
+        }
         // Precio con descuento
         val precioTotal = product!!.price - (product!!.price * (product!!.discountPercentage / 100))
-        binding.txtPriceDescountProduct.text = precioTotal.toString()
+        binding.txtPriceDescountProduct.text = "$ "+precioTotal
+        binding.txtPriceDescountProduct.setTextColor(ContextCompat.getColor(requireContext(), R.color.red))
         //TACHADO
-        val spannableString = SpannableString(product!!.price.toString())
+        val spannableString = SpannableString("$ "+product!!.price)
         spannableString.setSpan(StrikethroughSpan(), 0, product!!.price.toString().length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         binding.txtPriceProduct.text = spannableString
 
