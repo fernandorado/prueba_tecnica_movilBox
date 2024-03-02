@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/applicationPresentationFragment">
+
+    <fragment
+        android:id="@+id/applicationPresentationFragment"
+        android:name="com.android.pruebatecnicamovilbox.presentation.fragments.ApplicationPresentationFragment"
+        android:label="fragment_application_presentation"
+        tools:layout="@layout/fragment_application_presentation">
+        <!-- AQUI SE AGREGARON ANIMACIONES PERO DA ERROR AL COMPILAR
+        <action
+            android:id="@+id/action_applicationPresentationFragment_to_producListFragment"
+            app:destination="@id/producListFragment"
+            app:enterAnim="@android:anim/slide_out_right"
+            app:exitAnim="@android:anim/slide_out_left"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+
+        />
+        -->
+        <action
+            android:id="@+id/action_applicationPresentationFragment_to_producListFragment"
+            app:destination="@id/producListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/producListFragment"
+        android:name="com.android.pruebatecnicamovilbox.presentation.fragments.ProductListFragment"
+        android:label="fragment_produc_list"
+        tools:layout="@layout/fragment_product_list" />
+</navigation>

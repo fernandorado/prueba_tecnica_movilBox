@@ -1,11 +1,7 @@
-package com.android.pruebatecnicamovilbox.classes
+package com.android.pruebatecnicamovilbox.data.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "products")
-data class Product(
-    @PrimaryKey val id: Int,
+data class ProductModel(
+    val id: Int,
     val title: String,
     val description: String,
     val price: Double,
