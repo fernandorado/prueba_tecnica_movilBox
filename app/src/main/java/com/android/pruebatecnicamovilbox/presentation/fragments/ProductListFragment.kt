@@ -12,11 +12,9 @@ import com.android.pruebatecnicamovilbox.databinding.FragmentProductListBinding
 import com.android.pruebatecnicamovilbox.domain.model.Product
 import com.android.pruebatecnicamovilbox.presentation.adapters.AdaptadorProduct
 import com.android.pruebatecnicamovilbox.presentation.viewmodel.ProductViewModel
-import dagger.hilt.android.AndroidEntryPoint
 
 
 
-@AndroidEntryPoint
 class ProductListFragment : Fragment() {
 
     private lateinit var binding: FragmentProductListBinding
@@ -90,8 +88,17 @@ class ProductListFragment : Fragment() {
             )
         )
 
+
         //adapter = AdaptadorProduct(productViewModel.listaCultivos!!)
-        adapter = AdaptadorProduct(dataset.toList())
+
+        Log.d("TAG", "productViewModel.listaCultivos: $productViewModel.listaCultivos!!")
+        adapter = productViewModel.listaCultivos?.let { AdaptadorProduct(productViewModel.listaCultivos!!) } ?: AdaptadorProduct(emptyList())
+
+        productViewModel.productList.observe(viewLifecycleOwner) { productList ->
+            // Actualiza el adaptador con la nueva lista de productos
+            adapter.updateProductList(productList)
+        }
+        //adapter = AdaptadorProduct(productViewModel.fetchProductList())
 
         Log.d("TAG", "Entro a onViewCreated ")
         //productViewModel.fetchProductList()
@@ -101,10 +108,10 @@ class ProductListFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
 
-        /*productViewModel.productList.observe(viewLifecycleOwner, Observer { productList ->
-            adapter.productList = productList
-            adapter.notifyDataSetChanged()
-        })*/
+        productViewModel.productList.observe(viewLifecycleOwner) { productList ->
+            // Actualiza el adaptador con la nueva lista de productos
+            adapter.updateProductList(productList)
+        }
 
         //productViewModel.fetchProductList()
     }

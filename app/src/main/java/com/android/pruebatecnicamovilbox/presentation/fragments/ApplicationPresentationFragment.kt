@@ -9,11 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import com.android.pruebatecnicamovilbox.R
-import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-
-@AndroidEntryPoint
 class ApplicationPresentationFragment : Fragment() {
     lateinit var btnAceptar: Button
 

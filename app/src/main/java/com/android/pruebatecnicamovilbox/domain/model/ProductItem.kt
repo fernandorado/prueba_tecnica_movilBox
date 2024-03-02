@@ -17,5 +17,5 @@ data class Product(
     val images: List<String>
 )
 
-fun ProductModel.toDomain() = Product(id, title, description, price,discountPercentage,rating, stock, brand, category, thumbnail, images)
+fun ProductModel.toDomain() = ProductModel(id, title, description, price,discountPercentage,rating, stock, brand, category, thumbnail, images)
 fun ProductEntity.toDomain() = Product(id, title, description, price,discountPercentage,rating, stock, brand, category, thumbnail, images)

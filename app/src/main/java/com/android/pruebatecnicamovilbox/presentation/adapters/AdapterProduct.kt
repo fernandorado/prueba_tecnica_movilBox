@@ -8,10 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.pruebatecnicamovilbox.R
+import com.android.pruebatecnicamovilbox.data.model.ProductModel
 import com.android.pruebatecnicamovilbox.domain.model.Product
 import com.bumptech.glide.Glide
 
-class AdaptadorProduct(private val productList: List<Product>) :
+class AdaptadorProduct(private var productList: List<ProductModel>) :
     RecyclerView.Adapter<AdaptadorProduct.ViewHolderProduct>() {
 
     lateinit var vgrupo: ViewGroup
@@ -19,6 +20,11 @@ class AdaptadorProduct(private val productList: List<Product>) :
         vgrupo = parent
         val vista = LayoutInflater.from(parent.context).inflate(R.layout.item_list_product, parent, false)
         return ViewHolderProduct(vista)
+    }
+
+    fun updateProductList(newProductList: List<ProductModel>) {
+        productList = newProductList
+        notifyDataSetChanged() // Notifica al RecyclerView que los datos han cambiado
     }
 
     override fun onBindViewHolder(holder: ViewHolderProduct, position: Int) {

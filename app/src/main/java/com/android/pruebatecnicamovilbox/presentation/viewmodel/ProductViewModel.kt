@@ -5,52 +5,54 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.android.pruebatecnicamovilbox.data.model.ProductModel
 import com.android.pruebatecnicamovilbox.domain.GetProductsUseCase
 import com.android.pruebatecnicamovilbox.domain.GetProductDBUseCase
 import com.android.pruebatecnicamovilbox.domain.model.Product
-import dagger.hilt.android.lifecycle.HiltViewModel
+
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.log
 
-@HiltViewModel
-class ProductViewModel @Inject constructor(
-    private val getProductUseCase: GetProductsUseCase,
-    private val getProductDBUseCase: GetProductDBUseCase
-) : ViewModel() {
+class ProductViewModel : ViewModel() {
+
+    private val getProductUseCase = GetProductsUseCase()
 
     val productModel = MutableLiveData<Product>()
     val isLoading = MutableLiveData<Boolean>()
-    private val _productList = MutableLiveData<List<Product>>()
-    val productList: LiveData<List<Product>> get() = _productList
-    var listaCultivos: List<Product>? = null
+    private val _productList = MutableLiveData<List<ProductModel>>()
+    val productList: LiveData<List<ProductModel>> get() = _productList
+    var listaCultivos: List<ProductModel>? = null
 
-    fun fetchProductList() {
-        Log.d("TAG", "Entro a fetchProductList ")
+    init {
+        fetchProductList()
+    }
+
+    private fun fetchProductList() {
         viewModelScope.launch {
             try {
-                val productList = getProductDBUseCase()
-                listaCultivos = productList
+                val productList = getProductUseCase.invoke()
                 _productList.value = productList
             } catch (e: Exception) {
-                // Maneja el error de forma apropiada
+                Log.e("ProductViewModel", "Error fetching product list", e)
             }
         }
     }
 
-    fun onCreate() {
-        viewModelScope.launch {
-            isLoading.postValue(true)
-            val result = getProductUseCase()
+    /*
+        fun onCreate() {
+            viewModelScope.launch {
+                isLoading.postValue(true)
+                val result = getProductUseCase()
 
-            if (!result.isNullOrEmpty()) {
-                productModel.postValue(result[0])
-                isLoading.postValue(false)
+                if (!result.isNullOrEmpty()) {
+                    productModel.postValue(result[0])
+                    isLoading.postValue(false)
+                }
             }
         }
-    }
 
-
+     */
 
 
 }
