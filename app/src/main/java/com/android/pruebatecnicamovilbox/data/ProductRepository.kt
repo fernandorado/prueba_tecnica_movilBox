@@ -34,6 +34,11 @@ class ProductRepository @Inject constructor(
         dao.insertAll(product)
     }
 
+    suspend fun searchProduct(product: String): List<Product> {
+        val response: List<ProductEntity> = dao.getByProduct(product)
+        return response.map { it.toDomain() }
+    }
+
 
     suspend fun clearProducts() {
         dao.deleteProducts()

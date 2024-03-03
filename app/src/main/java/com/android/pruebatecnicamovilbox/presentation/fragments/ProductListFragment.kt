@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -36,7 +37,12 @@ class ProductListFragment : Fragment(), AdaptadorProduct.OnProductClickListener 
         productViewModel.onCreate()
 
 
-        adapter = productViewModel.listaCultivos?.let { AdaptadorProduct(productViewModel.listaCultivos!!, this) }
+        adapter = productViewModel.listaCultivos?.let {
+            AdaptadorProduct(
+                productViewModel.listaCultivos!!,
+                this
+            )
+        }
             ?: AdaptadorProduct(emptyList(), this)
 
         productViewModel.productList.observe(viewLifecycleOwner) { productList ->
@@ -48,12 +54,37 @@ class ProductListFragment : Fragment(), AdaptadorProduct.OnProductClickListener 
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
+
+        binding.searchIcon.setOnClickListener {
+            binding.searchView.visibility = View.VISIBLE
+            binding.searchIcon.visibility = View.GONE
+            val listener = object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    // Realizar búsqueda cuando se presiona Enter en el teclado
+                    query?.let { productViewModel.searchProducts(it) }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    // Realizar búsqueda mientras se escribe en la barra de búsqueda
+                    newText?.let { productViewModel.searchProducts(it) }
+                    return true
+                }
+            }
+
+            binding.searchView.setOnQueryTextListener(listener)
+        }
+
+
     }
 
     override fun onProductClick(product: Product) {
         val bundle = Bundle().apply {
             putParcelable("product", product)
         }
-        findNavController().navigate(R.id.action_producListFragment_to_productDetailFragment, bundle)
+        findNavController().navigate(
+            R.id.action_producListFragment_to_productDetailFragment,
+            bundle
+        )
     }
 }
