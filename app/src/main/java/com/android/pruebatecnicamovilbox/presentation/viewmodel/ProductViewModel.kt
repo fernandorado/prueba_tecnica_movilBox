@@ -21,19 +21,11 @@ class ProductViewModel @Inject constructor(
 ): ViewModel() {
 
     val Product = MutableLiveData<Product>()
-    val isLoading = MutableLiveData<Boolean>()
 
     private val _productList = MutableLiveData<List<Product>>()
     val productList: LiveData<List<Product>> get() = _productList
     var listaCultivos: List<Product>? = null
     val _selectedProduct = MutableLiveData<Product>()
-
-    // Expone selectedProduct como LiveData público
-    val selectedProduct: LiveData<Product> get() = _selectedProduct
-
-    fun selectProduct(product: Product) {
-        _selectedProduct.value = product
-    }
 
 
     init {
