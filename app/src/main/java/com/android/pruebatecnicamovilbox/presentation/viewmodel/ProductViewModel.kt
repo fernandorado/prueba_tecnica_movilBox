@@ -5,51 +5,45 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.pruebatecnicamovilbox.data.model.ProductModel
 import com.android.pruebatecnicamovilbox.domain.GetProductsUseCase
 import com.android.pruebatecnicamovilbox.domain.GetProductDBUseCase
 import com.android.pruebatecnicamovilbox.domain.model.Product
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.log
 
-class ProductViewModel : ViewModel() {
+@HiltViewModel
+class ProductViewModel @Inject constructor(
+    private val getProductUseCase: GetProductsUseCase,
+    private val getProductDBUseCase: GetProductDBUseCase
+): ViewModel() {
 
-    private val getProductUseCase = GetProductsUseCase()
-    private val getProductDBUseCase = GetProductDBUseCase()
-
-    val productModel = MutableLiveData<Product>()
+    val Product = MutableLiveData<Product>()
     val isLoading = MutableLiveData<Boolean>()
 
-    private val _productList = MutableLiveData<List<ProductModel>>()
-    val productList: LiveData<List<ProductModel>> get() = _productList
-    var listaCultivos: List<ProductModel>? = null
-    val _selectedProduct = MutableLiveData<ProductModel>()
+    private val _productList = MutableLiveData<List<Product>>()
+    val productList: LiveData<List<Product>> get() = _productList
+    var listaCultivos: List<Product>? = null
+    val _selectedProduct = MutableLiveData<Product>()
 
     // Expone selectedProduct como LiveData público
-    val selectedProduct: LiveData<ProductModel> get() = _selectedProduct
+    val selectedProduct: LiveData<Product> get() = _selectedProduct
 
-    fun selectProduct(product: ProductModel) {
+    fun selectProduct(product: Product) {
         _selectedProduct.value = product
     }
 
 
     init {
         fetchProductList()
-        selectedProduct.observeForever { product ->
-            if (product == null) {
-                Log.d("ProductViewModel", "selectedProduct está vacío ")
-            } else {
-                Log.d("ProductViewModel", "selectedProduct no está vacío ${selectedProduct.value}")
-            }
-        }
     }
 
-    private fun fetchProductList() {
+    fun fetchProductList() {
         viewModelScope.launch {
             try {
-                val productList = getProductUseCase.invoke()
+                val productList = getProductDBUseCase.invoke()
                 _productList.value = productList
             } catch (e: Exception) {
                 Log.e("ProductViewModel", "Error fetching product list", e)
@@ -57,18 +51,19 @@ class ProductViewModel : ViewModel() {
         }
     }
 
-/*
+
     fun onCreate() {
         viewModelScope.launch {
             try {
-                val productList = getProductUseCase.invoke()
+                getProductUseCase.invoke()
+                val productList = getProductDBUseCase.invoke()
                 _productList.value = productList
             } catch (e: Exception) {
                 Log.e("ProductViewModel", "Error fetching product list", e)
             }
         }
     }
-*/
+
 
 }
 

@@ -14,7 +14,7 @@ interface ProductDao {
 
     //CONSULTA
     @Query("SELECT * FROM products ORDER BY rating DESC")
-    suspend fun getAll():List<ProductModel>
+    suspend fun getAll():List<ProductEntity>
 
     @Query("SELECT * FROM products WHERE id = :id")
     suspend fun getById(id: Int): ProductEntity

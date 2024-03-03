@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import com.android.pruebatecnicamovilbox.R
 import com.android.pruebatecnicamovilbox.data.model.ProductModel
 import com.android.pruebatecnicamovilbox.databinding.FragmentProductDetailBinding
+import com.android.pruebatecnicamovilbox.domain.model.Product
 import com.android.pruebatecnicamovilbox.presentation.viewmodel.ProductViewModel
 import com.denzcoskun.imageslider.models.SlideModel
 
@@ -43,7 +44,7 @@ class ProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val product = arguments?.getParcelable<ProductModel>("product")
+        val product = arguments?.getParcelable<Product>("product")
         Log.d("PRODUCT DETAIL", "PRODUCTOS no está vacío $product")
         binding.txtNameProduct.text = product!!.title
         binding.txtRaitingProduct.text = product!!.rating.toString()

@@ -8,9 +8,9 @@ import com.android.pruebatecnicamovilbox.data.database.entities.ProductEntity
 
 @Database(
     entities = [ProductEntity::class],
-    version = 1
+    version = 1, exportSchema = false
 )
 @TypeConverters(Converters::class) // Registrar el convertidor de tipo aquí
-abstract class ProductDatabase: RoomDatabase() {
+abstract class ProductDatabase : RoomDatabase() {
     abstract fun getProductDao(): ProductDao
 }

@@ -8,13 +8,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ProductService  {
-    //private val api=ProductApiClient()
+class ProductService  @Inject constructor(private val api:ProductApiClient){
     private val retrofit = RetrofitHelper.getRetrofit()
 
     suspend fun getProducts(): List<ProductModel> {
         return withContext(Dispatchers.IO) {
-            val response = retrofit.create(ProductApiClient::class.java).getAllProducts()
+            val response = api.getAllProducts()
             val productsResponse: ProductListResponse? = response
             productsResponse?.products ?: emptyList()
         }

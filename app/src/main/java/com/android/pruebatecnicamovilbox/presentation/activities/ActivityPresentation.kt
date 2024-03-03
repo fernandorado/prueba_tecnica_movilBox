@@ -6,7 +6,6 @@ import com.android.pruebatecnicamovilbox.R
 import com.android.pruebatecnicamovilbox.presentation.fragments.ApplicationPresentationFragment
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class ActivityPresentation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
