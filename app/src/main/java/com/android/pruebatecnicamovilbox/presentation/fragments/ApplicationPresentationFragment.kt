@@ -13,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 
-@AndroidEntryPoint
 class ApplicationPresentationFragment : Fragment() {
     lateinit var btnAceptar: Button
 
