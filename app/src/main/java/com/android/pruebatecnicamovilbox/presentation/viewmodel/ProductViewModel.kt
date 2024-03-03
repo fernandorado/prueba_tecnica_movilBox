@@ -17,6 +17,7 @@ import kotlin.math.log
 class ProductViewModel : ViewModel() {
 
     private val getProductUseCase = GetProductsUseCase()
+    private val getProductDBUseCase = GetProductDBUseCase()
 
     val productModel = MutableLiveData<Product>()
     val isLoading = MutableLiveData<Boolean>()
@@ -24,7 +25,7 @@ class ProductViewModel : ViewModel() {
     private val _productList = MutableLiveData<List<ProductModel>>()
     val productList: LiveData<List<ProductModel>> get() = _productList
     var listaCultivos: List<ProductModel>? = null
-     val _selectedProduct = MutableLiveData<ProductModel>()
+    val _selectedProduct = MutableLiveData<ProductModel>()
 
     // Expone selectedProduct como LiveData público
     val selectedProduct: LiveData<ProductModel> get() = _selectedProduct
@@ -56,21 +57,18 @@ class ProductViewModel : ViewModel() {
         }
     }
 
-    /*
-        fun onCreate() {
-            viewModelScope.launch {
-                isLoading.postValue(true)
-                val result = getProductUseCase()
-
-                if (!result.isNullOrEmpty()) {
-                    productModel.postValue(result[0])
-                    isLoading.postValue(false)
-                }
+/*
+    fun onCreate() {
+        viewModelScope.launch {
+            try {
+                val productList = getProductUseCase.invoke()
+                _productList.value = productList
+            } catch (e: Exception) {
+                Log.e("ProductViewModel", "Error fetching product list", e)
             }
         }
-
-     */
-
+    }
+*/
 
 }
 

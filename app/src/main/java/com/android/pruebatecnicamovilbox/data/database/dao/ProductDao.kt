@@ -7,13 +7,14 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.android.pruebatecnicamovilbox.data.database.entities.ProductEntity
+import com.android.pruebatecnicamovilbox.data.model.ProductModel
 
 @Dao
 interface ProductDao {
 
     //CONSULTA
     @Query("SELECT * FROM products ORDER BY rating DESC")
-    suspend fun getAll():List<ProductEntity>
+    suspend fun getAll():List<ProductModel>
 
     @Query("SELECT * FROM products WHERE id = :id")
     suspend fun getById(id: Int): ProductEntity

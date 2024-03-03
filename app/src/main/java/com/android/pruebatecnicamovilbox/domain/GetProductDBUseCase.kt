@@ -7,10 +7,6 @@ import javax.inject.Inject
 
 class GetProductDBUseCase  {
     private val repository= ProductRepository()
-/*
-    suspend operator fun invoke(): List<Product> {
-        return repository.getAllProductFromApi()
-    }
-
- */
+    //suspend operator fun invoke() = repository.getAllProductFromApi()
+    //suspend operator fun invoke() = repository.getAllProductFromDatabase()
 }
