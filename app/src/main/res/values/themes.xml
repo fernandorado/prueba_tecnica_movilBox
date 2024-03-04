@@ -5,5 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.PruebaTecnicaMovilBox" parent="Base.Theme.PruebaTecnicaMovilBox" />
+    <style name="Theme.PruebaTecnicaMovilBox" parent="Base.Theme.PruebaTecnicaMovilBox">
+        <item name="android:statusBarColor">@color/greenMain</item>
+    </style>
 </resources>
