@@ -18,4 +18,11 @@ class ProductService  @Inject constructor(private val api:ProductApiClient){
             productsResponse?.products ?: emptyList()
         }
     }
+
+    suspend fun getCategories(): List<String> {
+        return withContext(Dispatchers.IO) {
+            val response = api.getAllCategorires()
+            response ?: emptyList()
+        }
+    }
 }

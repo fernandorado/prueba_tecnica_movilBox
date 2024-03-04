@@ -77,43 +77,36 @@ class ProductListFragment : Fragment(), AdaptadorProduct.OnProductClickListener 
             binding.searchView.setOnQueryTextListener(listener)
         }
 
-        binding.filterIcon.setOnClickListener {
-            val filterOptions = arrayOf(
-                "smartphones",
-                "laptops",
-                "fragances",
-                "skincare",
-                "groceries",
-                "home-decoration",
-                "furniture",
-                "tops",
-                "womens-dresses",
-                "womens-shoes",
-                "mens-shirts",
-                "mens-shoes",
-                "mens-watches",
-                "womens-watches",
-                "womens-bags",
-                "womens-jewellery",
-                "sunglasses",
-                "automotive",
-                "motorcycle",
-                "lighting"
-            )
+        productViewModel.getCategories()
 
+        binding.filterIcon.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
             builder.setTitle("Selecciona un filtro")
-            builder.setItems(filterOptions) { dialog, which ->
-                val selectedFilter = filterOptions[which]
 
-                // Aquí puedes realizar la lógica para filtrar la lista de productos según el filtro seleccionado
-                // Por ejemplo, puedes llamar a un método en productViewModel para aplicar el filtro
-                productViewModel.applyFilter(selectedFilter)
+            // Observa la lista de categorías y actualiza filterOptions cuando cambie
+            productViewModel.categoriresList.observe(viewLifecycleOwner) { categories ->
+                // Verificar si la lista de categorías no es nula
+                categories?.let {
+                    // Crear filterOptions con la nueva lista de categorías
+                    val filterOptions = categories.toTypedArray()
+
+                    // Configurar las opciones de filtro en el AlertDialog.Builder
+                    builder.setItems(filterOptions) { dialog, which ->
+                        val selectedFilter = filterOptions[which]
+                        productViewModel.applyFilter(selectedFilter)
+                    }
+                }
+            }
+
+            builder.setNeutralButton("Mostrar Todos") { dialog, _ ->
+                productViewModel.fetchProductList()
             }
 
             builder.setNegativeButton("Cancelar") { dialog, _ ->
                 dialog.dismiss()
             }
+
+
 
             val dialog = builder.create()
             dialog.show()

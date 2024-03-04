@@ -29,6 +29,10 @@ class ProductRepository @Inject constructor(
         return response.map { it.toDomain() }
     }
 
+    suspend fun getAllCategoriesFromApi(): List<String> {
+        return api.getCategories() // Suponiendo que getProducts() devuelve una lista de cadenas
+    }
+
 
     suspend fun insertProduct(product: List<ProductEntity>) {
         dao.insertAll(product)

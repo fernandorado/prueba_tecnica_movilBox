@@ -26,7 +26,9 @@ class ProductViewModel @Inject constructor(
     val Product = MutableLiveData<Product>()
 
     private val _productList = MutableLiveData<List<Product>>()
+    private val _categoriresList = MutableLiveData<List<String>>()
     val productList: LiveData<List<Product>> get() = _productList
+    val categoriresList: LiveData<List<String>> get() = _categoriresList
     var listaCultivos: List<Product>? = null
 
 
@@ -101,6 +103,17 @@ class ProductViewModel @Inject constructor(
                     // Actualizar la lista de productos filtrada
                     _productList.value = filteredList
                 }
+            }
+        }
+    }
+
+    fun getCategories(){
+        viewModelScope.launch {
+            try {
+                val categoriresList = getProductDBUseCase.getCategories()
+                _categoriresList.value = categoriresList
+            } catch (e: Exception) {
+                Log.e("ProductViewModel", "Error fetching product list", e)
             }
         }
     }

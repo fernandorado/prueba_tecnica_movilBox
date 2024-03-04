@@ -11,6 +11,8 @@ import retrofit2.http.GET
 interface ProductApiClient {
     @GET("/products")
     suspend fun getAllProducts(): ProductListResponse
+    @GET("/products/categories")
+    suspend fun getAllCategorires(): List<String>
 }
 
 
