@@ -43,5 +43,8 @@
         <argument
             android:name="product"
             app:argType="com.android.pruebatecnicamovilbox.data.model.ProductModel" />
+        <action
+            android:id="@+id/action_productDetailFragment_to_producListFragment"
+            app:destination="@id/producListFragment" />
     </fragment>
 </navigation>

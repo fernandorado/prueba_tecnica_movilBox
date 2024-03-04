@@ -59,11 +59,14 @@ class ProductViewModel @Inject constructor(
     }
 
     fun searchProducts(query: String) {
+        Log.d("Tag","query: $query")
         viewModelScope.launch {
             if (query.isNullOrEmpty()) {
                 // Si la consulta de búsqueda es nula o está vacía, llamar a fetchProductList() para obtener todos los productos
                 fetchProductList()
             } else {
+                val productListAll = getProductDBUseCase.invoke()
+                _productList.value = productListAll
                 _productList.value?.let { productList ->
 
                     val filteredList = productList.filter { product ->
@@ -72,6 +75,27 @@ class ProductViewModel @Inject constructor(
                                 product.category.contains(query, ignoreCase = true) ||
                                 product.brand.contains(query, ignoreCase = true)
 
+                    }
+
+                    // Actualizar la lista de productos filtrada
+                    _productList.value = filteredList
+                }
+            }
+        }
+    }
+
+    fun applyFilter(query:String){
+        viewModelScope.launch {
+            if (query.isNullOrEmpty()) {
+                // Si la consulta de búsqueda es nula o está vacía, llamar a fetchProductList() para obtener todos los productos
+                fetchProductList()
+            } else {
+                val productListAll = getProductDBUseCase.invoke()
+                _productList.value = productListAll
+                _productList.value?.let { productList ->
+
+                    val filteredList = productList.filter { product ->
+                                product.category.contains(query, ignoreCase = true)
                     }
 
                     // Actualizar la lista de productos filtrada

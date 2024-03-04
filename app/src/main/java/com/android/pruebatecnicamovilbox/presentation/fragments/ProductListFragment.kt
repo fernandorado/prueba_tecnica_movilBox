@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -58,6 +59,7 @@ class ProductListFragment : Fragment(), AdaptadorProduct.OnProductClickListener 
         binding.searchIcon.setOnClickListener {
             binding.searchView.visibility = View.VISIBLE
             binding.searchIcon.visibility = View.GONE
+
             val listener = object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     // Realizar búsqueda cuando se presiona Enter en el teclado
@@ -73,6 +75,48 @@ class ProductListFragment : Fragment(), AdaptadorProduct.OnProductClickListener 
             }
 
             binding.searchView.setOnQueryTextListener(listener)
+        }
+
+        binding.filterIcon.setOnClickListener {
+            val filterOptions = arrayOf(
+                "smartphones",
+                "laptops",
+                "fragances",
+                "skincare",
+                "groceries",
+                "home-decoration",
+                "furniture",
+                "tops",
+                "womens-dresses",
+                "womens-shoes",
+                "mens-shirts",
+                "mens-shoes",
+                "mens-watches",
+                "womens-watches",
+                "womens-bags",
+                "womens-jewellery",
+                "sunglasses",
+                "automotive",
+                "motorcycle",
+                "lighting"
+            )
+
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Selecciona un filtro")
+            builder.setItems(filterOptions) { dialog, which ->
+                val selectedFilter = filterOptions[which]
+
+                // Aquí puedes realizar la lógica para filtrar la lista de productos según el filtro seleccionado
+                // Por ejemplo, puedes llamar a un método en productViewModel para aplicar el filtro
+                productViewModel.applyFilter(selectedFilter)
+            }
+
+            builder.setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            val dialog = builder.create()
+            dialog.show()
         }
 
 

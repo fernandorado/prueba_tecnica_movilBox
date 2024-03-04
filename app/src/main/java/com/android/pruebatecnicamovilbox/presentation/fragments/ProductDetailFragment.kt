@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.android.pruebatecnicamovilbox.R
 import com.android.pruebatecnicamovilbox.data.model.ProductModel
 import com.android.pruebatecnicamovilbox.databinding.FragmentProductDetailBinding
@@ -77,5 +78,11 @@ class ProductDetailFragment : Fragment() {
         }
         
         binding.imageSlider.setImageList(imageList)
+
+        binding.beforeIcon.setOnClickListener{
+            findNavController().navigate(
+                R.id.action_productDetailFragment_to_producListFragment
+            )
+        }
     }
 }
